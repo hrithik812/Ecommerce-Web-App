@@ -5,15 +5,20 @@
  */
 package mycart.servlets;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import mycart.dao.CategoryDao;
+import mycart.dao.ProductDao;
 import mycart.entities.Category;
 import mycart.entities.Product;
 import mycart.helper.FactoryProvider;
@@ -22,6 +27,7 @@ import mycart.helper.FactoryProvider;
  *
  * @author DarkWorld
  */
+@MultipartConfig  
 public class ProductOperationServlet extends HttpServlet {
 
     /**
@@ -52,7 +58,7 @@ public class ProductOperationServlet extends HttpServlet {
                 httpSession.setAttribute("message", "Category Added Successfully" + catid);
                 response.sendRedirect("admin.jsp");
                 return;
-            } else if (op.trim().equals("addcategory")) {
+            } else if (op.trim().equals("addproduct")) {
                 //add product deatils to db
                 String pName = request.getParameter("pName");
                 String pDesc = request.getParameter("pDesc");
@@ -67,10 +73,39 @@ public class ProductOperationServlet extends HttpServlet {
                     p.setpPrice(pPrice);
                     p.setpDiscount(pDiscount);
                     p.setpPhoto(part.getSubmittedFileName());
+                    p.setpQuantity(pQuantity);
                     //get Category by cid
                     CategoryDao cdao=new CategoryDao(FactoryProvider.getFactory());
                     Category category=cdao.getCategory(cid);
                     p.setCategory(category);
+                    
+                    //save the product
+                    ProductDao pdao=new ProductDao(FactoryProvider.getFactory());
+                     pdao.saveProduct(p);
+                     
+                     String path=request.getRealPath("image")+File.separator+"products"+File.separator+part.getSubmittedFileName();
+                     try{
+                         FileOutputStream fos=new FileOutputStream(path);
+                            InputStream  is=part.getInputStream();
+                             
+                               byte []data =new byte[is.available()];
+                               is.read(data);                      
+                               fos.write(data);
+                               fos.close();
+                     }catch(Exception e)
+                     {
+                       e.printStackTrace();
+                     }
+                    
+                     
+                     
+                     out.println("Product Saved Successfully");
+                     HttpSession httpSession=request.getSession();
+                     httpSession.setAttribute("message","Product is added successfully");
+                     response.sendRedirect("admin.jsp");
+                     return;
+                   
+                     
             }
         }
     }

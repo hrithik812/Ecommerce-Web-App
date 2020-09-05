@@ -29,7 +29,7 @@
       <ul class="navbar-nav ml-auto">  <!--Eta Website theke dekhano,ml mane aamader right --> 
           
           <li class="nav-item active">
-              <a class="nav-link" href="#" data-toggle="modal" data-target="#cart"><i class="fa fa-cart-plus" style="font-size:20px;"></i><span class="card-items"style="font-size:20px;">(4)</span></a>
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#cart"><i class="fa fa-cart-plus" style="font-size:20px;"></i><span class="cart-items"style="font-size:20px;">(4)</span></a>
          </li>
           
           <%

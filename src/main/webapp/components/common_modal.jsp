@@ -9,7 +9,9 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+          <div class="cart-body">
+              
+          </div>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-primary checkout-btn">CheckOut</button>

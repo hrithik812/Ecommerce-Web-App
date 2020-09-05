@@ -63,7 +63,7 @@
                     <div class="card">
                         <div class="card-body text-center">
                             <div class="container">
-                                <img class="img-fluid " style="max-width:80px;"src="image/products.png" alt="user-icon">
+                                <img class="img-fluid " style="max-width:80px;"src="image/product.png" alt="user-icon">
                             </div>
                             <h1>2322</h1>
                             <h1 class="text-uppercase text-muted">Products</h1>
