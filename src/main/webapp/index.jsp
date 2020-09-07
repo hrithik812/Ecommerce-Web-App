@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Welcome to the ECart System Of Romoniyo</title>
         <%@include file="components/css_js.jsp"%>
 
     </head>
@@ -37,9 +37,6 @@
                         All Product
                     </a>
 
-
-
-
                     <% for (Category category : clist) {
 
                     %>    
@@ -52,7 +49,7 @@
 
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-columns">
@@ -65,7 +62,10 @@
                             %> 
 
                             <div class="card">
-                                <img src="image/products/<%=product.getpPhoto()%>" class="card-img-top" alt="...">
+                                <div class="container text-center">
+                                    <img src="image/products/<%=product.getpPhoto()%>" style="max-height:200px;max-width:100%;width:auto; "class="card-img-top" alt="...">
+
+                                </div>
                                 <div class="card-body>
                                      <h4>
                                      <%=product.getpName()%>
@@ -75,7 +75,7 @@
                                 </div>   
                                 <div class="card-footer">
                                     <button class="btn custom-bg text-white">Buy Here</button>  
-                                    <button class="btn btn-outline-primary">&#8377;<%=product.getpPrice()%></button>  
+                                    <button class="btn btn-outline-primary">&#2547;<%=product.getpPrice()%></button>  
                                 </div>
 
                             </div>
