@@ -22,10 +22,17 @@
     </head>
     <body>
         <%@include file="components/navbar.jsp"%>
-
         <%
             ProductDao dao = new ProductDao(FactoryProvider.getFactory());
-            List<Product> list = dao.getAllProducts();
+            List<Product> list = null;
+            String cat = request.getParameter("category");
+
+            if (cat == null || cat.trim().equals("all")) {
+                list = dao.getAllProducts();
+            } else {
+                int cid = Integer.parseInt(cat.trim());
+                list = dao.getProductByCategroyId(cid);
+            }
             CategoryDao cdao = new CategoryDao(FactoryProvider.getFactory());
             List<Category> clist = cdao.getCategories();
         %>    
@@ -33,38 +40,31 @@
 
             <div class="col-md-2">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
+                    <a href="index.jsp?category=all" class="list-group-item list-group-item-action active">
                         All Product
                     </a>
 
-                    <% for (Category category : clist) {
+                    <% for (Category c : clist) {
 
                     %>    
-                    <a href="#" class="list-group-item list-group-item-action"><%=category.getCategoryTitle()%></a>
+                    <a href="index.jsp?category=<%=c.getCategoryId()%>" class="list-group-item list-group-item-action"><%=c.getCategoryTitle()%></a>
 
                     <%
                         }
                     %>
-
-
                 </div>
             </div>
             <div class="col-md-10">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-columns">
-
-
-
-
                             <%
                                 for (Product product : list) {
                             %> 
-
+                            <!--product card-->
                             <div class="card">
                                 <div class="container text-center">
                                     <img src="image/products/<%=product.getpPhoto()%>" style="max-height:200px;max-width:100%;width:auto; "class="card-img-top" alt="...">
-
                                 </div>
                                 <div class="card-body>
                                      <h4>
@@ -79,15 +79,15 @@
                                 </div>
 
                             </div>
-                            <%
+                            <%}
+                                if (list.size() == 0) {
+                                    out.println("<h1>No item in this list</h1>");
                                 }
+
                             %>
                         </div>     
                     </div>
                 </div>
-
-
-
             </div>
         </div>
         <%@include file="components/common_modal.jsp"%>
